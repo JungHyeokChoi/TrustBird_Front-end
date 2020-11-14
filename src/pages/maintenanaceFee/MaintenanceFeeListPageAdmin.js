@@ -13,7 +13,7 @@ const MaintenanceFeeListPageAdmin = ({ maintenanceFeeList, loc, pageLimit }) => 
   const [targetModalNum, setTargetModalNum] = useState(null)
 
   const onDelete = (electronicPaymentNum, email) => {
-    fetch(`${process.env.REACT_APP_SERVER}/maintenanceFee/delete`, {
+    fetch(`${process.env.REACT_APP_SERVER}/api/maintenanceFee/delete`, {
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -23,14 +23,14 @@ const MaintenanceFeeListPageAdmin = ({ maintenanceFeeList, loc, pageLimit }) => 
       },
       body: JSON.stringify({ electronicPaymentNum, email })
     })
-    .then((res) => {
-      if (res.status === 200) {
-        alert("MaintenanceFee Delete Success")
-      } else {
-        alert("MaintenanceFee Delete Fail")
-      }
-      window.location.reload()
-    })
+      .then((res) => {
+        if (res.status === 200) {
+          alert("MaintenanceFee Delete Success")
+        } else {
+          alert("MaintenanceFee Delete Fail")
+        }
+        window.location.reload()
+      })
   }
 
   return (
@@ -46,7 +46,7 @@ const MaintenanceFeeListPageAdmin = ({ maintenanceFeeList, loc, pageLimit }) => 
             <th>청구 기관</th>
             <th>전자 납부 번호</th>
             <th>납기일</th>
-            <th style={{width: "10%" }}>금액</th>
+            <th style={{ width: "10%" }}>금액</th>
             <th style={{ width: "13%" }}>상세 보기</th>
             <th>수정</th>
             <th>삭제</th>
@@ -63,14 +63,14 @@ const MaintenanceFeeListPageAdmin = ({ maintenanceFeeList, loc, pageLimit }) => 
                 <td>{maintenanceFee.electronicPaymentNum}</td>
                 <td>{maintenanceFee.dueDate}</td>
                 <td>{maintenanceFee.amountDue}</td>
-                <td><Button className="scopeimage" onClick={() => setTargetModalNum(maintenanceFee.electronicPaymentNum) } /></td>
+                <td><Button className="scopeimage" onClick={() => setTargetModalNum(maintenanceFee.electronicPaymentNum)} /></td>
                 <td><Button className="updateimage"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      history.push(`/maintenancefeemodified/admin?electronicPaymentNum=${maintenanceFee.electronicPaymentNum}`)
-                    }}/>
+                  onClick={(e) => {
+                    e.preventDefault()
+                    history.push(`/maintenancefeemodified/admin?electronicPaymentNum=${maintenanceFee.electronicPaymentNum}`)
+                  }} />
                 </td>
-                <td><Button className="deleteimage" onClick={() => onDelete(maintenanceFee.electronicPaymentNum, maintenanceFee.email)}/></td>
+                <td><Button className="deleteimage" onClick={() => onDelete(maintenanceFee.electronicPaymentNum, maintenanceFee.email)} /></td>
               </tr>
             ))}
           {targetModalNum ? (<MaintenanceFeeModal electronicPaymentNum={targetModalNum} handleClose={() => setTargetModalNum(null)} />) : null}
