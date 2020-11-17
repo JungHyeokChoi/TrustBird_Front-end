@@ -16,7 +16,6 @@
 
 ### * Pre-Setting
 
-- Ubuntu
 - Docker
 - Node.js(ver 12.x)
 - Go
